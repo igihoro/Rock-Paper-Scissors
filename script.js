@@ -1,5 +1,7 @@
 
 /* getting random choice for computer*/
+const container = document.querySelector('#container');
+const content = document.querySelector('#content');
 function getComputerChoice(){
     function getRandomInt(max) {
         return Math.floor(Math.random() * max)}
@@ -14,46 +16,88 @@ function getComputerChoice(){
     return computerSelection;
     
 }
-const PAPER = "paper"
+let playerSelection;
+
 
 
 let pc = 0;
 let user = 0;
 
 /* Play function */
-function playRound(playerSelection, computerSelection){
+function playRound(playerSelection){
+
+    computerSelection = getComputerChoice();
 
     if(playerSelection === computerSelection){
-        alert("Even. Try again")
+        content.textContent = "Even. Try again";
     }
     else if(playerSelection === "rock"){
         if(computerSelection === "paper"){
-            alert("You lose! Papaer bits rock");
+            content.textContent = "You lose! Papaer bits rock";
             pc++;
         }else{
-            alert("You win! Rock bits scissors")
+            content.textContent = "You win! Rock bits scissors";
             user++;
         }
     }else if(playerSelection === "paper"){
         if(computerSelection === "scissors"){
-            alert("You lose! Scissors beats paper");
+            content.textContent = "You lose! Scissors beats paper";
             pc++;
         }else{
-            alert("You win! Paper beats rock")
+            content.textContent = "You win! Paper beats rock";
             user++;
         }
     }else{
         if(computerSelection === "rock"){
-            alert("You lose! Rock beats scissors");
+            content.textContent = "You lose! Rock beats scissors";
             pc++;
         }else{
-            alert("You win! Scissors beats paper")
+            content.textContent = "You win! Scissors beats paper";
             user++;
         }
+
     }
+    
+
+    if (pc == 5 || user == 5) {
+        if(pc > user){
+            container.textContent = "You lose!";
+        }else{
+            container.textContent = "You win!";
+        }
+        pc = 0;
+        user = 0;
+        
+    }else{
+        container.textContent = "Score is PC " + pc + " : " + user + " You";
+    }
+    
+    
 }
 
-function getUserInput(x){
+
+function clickListener(event) {
+    playerSelection = event.target.value;
+    playRound(playerSelection);
+}
+
+
+
+
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach(
+    function (b) {
+        b.addEventListener('click', clickListener);
+    }
+);
+
+
+
+
+
+
+/*function getUserInput(){
     while(true){
         let input = prompt("Enter rock, paper or scissors");
         if(input === null){
@@ -78,7 +122,7 @@ function getUserInput(x){
 function game(){
     for(let i = 0; i < 5; i++){
         let computerSelection = getComputerChoice();
-        let playerSelection = getUserInput(computerSelection);
+        let playerSelection = getUserInput();
         playRound(playerSelection, computerSelection);
 
     }
@@ -97,3 +141,4 @@ function game(){
    
 
 
+*/
